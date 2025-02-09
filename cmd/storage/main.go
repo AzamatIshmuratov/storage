@@ -1,7 +1,26 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+
+	"github.com/AzamatIshmuratov/storage/internal/storage"
+)
 
 func main() {
-	fmt.Println("Hello from storage!")
+	storage := storage.NewStorage()
+
+	file, err := storage.Upload("test.txt", []byte("Hello"))
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	restoredFile, err := storage.GetByID(file.ID)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Its restored file", restoredFile)
+
 }
